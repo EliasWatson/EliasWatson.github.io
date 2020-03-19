@@ -6,4 +6,4 @@ description: "Basic 3D Rendering on Pico8"
 keywords: ""
 ---
 
-<iframe src="cubes.html"></iframe>
+<iframe src="/cubes.html" style="width: 100%; height: 80vh;"></iframe>
