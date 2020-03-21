@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>COVID-19 Dashboard</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="css/covid19.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">COVID-19 Dashboard</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <select class="nav-item selectpicker" id="whitelistPicker" data-dropdown-align-right="true"
+                    data-width="fit">
+                <option>Blacklist</option>
+                <option>Whitelist</option>
+            </select>
+            <select class="nav-item selectpicker" id="countryPicker" multiple data-live-search="true"
+                    title="Countries"
+                    data-dropdown-align-right="true">
+            </select>
+        </ul>
+    </div>
+</nav>
+
+<div class="container container-stat">
+    <div class="row">
+        <div class="col col-stat"><h4>Total Infected</h4>
+            <h3 class="stat-infected">0</h3></div>
+        <div class="col col-stat"><h4>Total Deaths</h4>
+            <h3 class="stat-deaths">0</h3></div>
+        <div class="col col-stat"><h4>Total Recovered</h4>
+            <h3 class="stat-recovered">0</h3></div>
+        <div class="col col-stat"><h4>Mortality Rate</h4>
+            <h3 class="stat-mortality">0</h3></div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <span class="text-muted">© 2020 Elias Watson</span>
+            <span class="text-muted ml-auto">All data from <a
+                    href="https://github.com/ExpDev07/coronavirus-tracker-api">coronavirus-tracker-api</a></span>
+        </div>
+    </div>
+</footer>
+
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/bootstrap-select.min.js"></script>
+<script src="js/covid19.js"></script>
+</body>
+</html>
