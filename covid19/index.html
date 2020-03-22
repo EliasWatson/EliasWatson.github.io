@@ -6,6 +6,7 @@
     <title>COVID-19 Dashboard</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="css/Chart.min.css">
     <link rel="stylesheet" href="css/covid19.css">
 </head>
 <body>
@@ -17,6 +18,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <span class="nav-item text-muted" id="lastUpdated"></span>
         <ul class="navbar-nav ml-auto">
             <select class="nav-item selectpicker" id="whitelistPicker" data-dropdown-align-right="true"
                     data-width="fit">
@@ -31,6 +33,8 @@
     </div>
 </nav>
 
+<div class="container container-stat">&nbsp;</div>
+
 <div class="container container-stat">
     <div class="row">
         <div class="col col-stat"><h4>Total Infected</h4>
@@ -43,6 +47,24 @@
             <h3 class="stat-mortality">0</h3></div>
     </div>
 </div>
+
+<div class="container container-stat">
+    <div class="row">
+        <div class="col col-stat">
+            <div style="display: flex">
+                <h5>Raw Stats</h5>
+                <select class="nav-item selectpicker ml-auto mr-0" id="rawLogPicker" data-dropdown-align-right="true"
+                        data-width="fit" style="justify-self: flex-end">
+                    <option>Linear</option>
+                    <option>Logarithmic</option>
+                </select>
+            </div>
+            <canvas id="rawChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="container container-stat">&nbsp;</div>
 
 <footer class="footer">
     <div class="container">
@@ -57,6 +79,7 @@
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/bootstrap-select.min.js"></script>
+<script src="js/Chart.bundle.min.js"></script>
 <script src="js/covid19.js"></script>
 </body>
 </html>

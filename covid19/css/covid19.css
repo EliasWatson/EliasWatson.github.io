@@ -1,12 +1,14 @@
 .container-stat {
-    margin-top: 5vh;
+    margin-bottom: 2vh;
 }
 
 .col-stat {
     margin-left: 1vh;
     margin-right: 1vh;
+    padding: 1vh;
     border: lightgray 0.25vh solid;
     border-radius: 1vh;
+    background-color: #f5f5f5;
 }
 
 .col h4, .col h3 {
