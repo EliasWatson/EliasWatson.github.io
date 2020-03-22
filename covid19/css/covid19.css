@@ -1,3 +1,7 @@
+#datePicker {
+    width: min-content;
+}
+
 .container-stat {
     margin-bottom: 2vh;
 }

@@ -54,11 +54,14 @@ $(document).ready(_ => {
         localStorage.setItem(storeCountries, JSON.stringify(val));
         updateDashboard();
     });
+
+    $("#datePicker").datepicker().on("changeDate", updateDashboard);
 });
 
 function downloadStats() {
     $.get("https://coronavirus-tracker-api.herokuapp.com/v2/locations?timelines=1", "", data => {
         dataCache = data;
+        $("#datePicker").datepicker("update", new Date());
         updateDashboard();
         $("#lastUpdated").text(`Last updated ${new Date().toLocaleString("en-US")}`);
     });
@@ -68,6 +71,10 @@ function downloadStats() {
 function updateDashboard() {
     if (dataCache === undefined) return;
 
+    let currentDateObj = $("#datePicker").datepicker("getDate");
+    currentDateObj.setDate(currentDateObj.getDate() - 1);
+    const currentDate = isoToDate(currentDateObj.toISOString());
+
     let whitelist = localStorage.getItem(storeWhitelist) === "Whitelist";
     let selectedCountries = JSON.parse(localStorage.getItem(storeCountries));
     let countries = new Set();
@@ -75,7 +82,8 @@ function updateDashboard() {
 
     const addToTimeline = (statTimeline, statKey) => {
         Object.keys(statTimeline).forEach(day => {
-            const dayKey = day.match(/(\d+-\d+-\d+)T.+/)[1];
+            const dayKey = isoToDate(day);
+            if (Date.parse(dayKey) > Date.parse(currentDate)) return;
             if (!timeline.has(dayKey)) timeline.set(dayKey, {infected: 0, deaths: 0, recovered: 0});
             let dayStats = timeline.get(dayKey);
             dayStats[statKey] += statTimeline[day];
@@ -83,17 +91,9 @@ function updateDashboard() {
         });
     };
 
-    let totalInfected = 0;
-    let totalDeaths = 0;
-    let totalRecovered = 0;
     dataCache.locations.forEach(loc => {
         countries.add(loc.country);
-
         if ((whitelist && selectedCountries.includes(loc.country)) || (!whitelist && !selectedCountries.includes(loc.country))) {
-            totalInfected += loc.latest.confirmed;
-            totalDeaths += loc.latest.deaths;
-            totalRecovered += loc.latest.recovered;
-
             addToTimeline(loc.timelines.confirmed.timeline, "infected");
             addToTimeline(loc.timelines.deaths.timeline, "deaths");
             addToTimeline(loc.timelines.recovered.timeline, "recovered");
@@ -107,12 +107,13 @@ function updateDashboard() {
     countryPicker.selectpicker("val", selectedCountries);
     countryPicker.selectpicker("refresh");
 
-    $(".stat-infected").text(`${totalInfected.toLocaleString()}`);
-    $(".stat-deaths").text(`${totalDeaths.toLocaleString()}`);
-    $(".stat-recovered").text(`${totalRecovered.toLocaleString()}`);
+    const currentStats = timeline.get(currentDate);
+    $(".stat-infected").text(`${currentStats.infected.toLocaleString()}`);
+    $(".stat-deaths").text(`${currentStats.deaths.toLocaleString()}`);
+    $(".stat-recovered").text(`${currentStats.recovered.toLocaleString()}`);
 
     // const mortalityRate = (totalDeaths / (totalDeaths + totalRecovered)) * 100;
-    const mortalityRate = (totalDeaths / totalInfected) * 100;
+    const mortalityRate = (currentStats.deaths / currentStats.infected) * 100;
     $(".stat-mortality").text(`${mortalityRate.toLocaleString()}%`);
 
     updateRawChart(timeline);
@@ -149,4 +150,8 @@ function updateCanvasSize() {
     });
 
     if (rawChart !== undefined) rawChart.update();
+}
+
+function isoToDate(iso) {
+    return iso.match(/(\d+-\d+-\d+).+/)[1];
 }
