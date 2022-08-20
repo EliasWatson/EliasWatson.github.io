@@ -1,4 +1,4 @@
-baseURL = "https://eliaswatson.dev/"
+baseURL = "https://eliaswatson.github.io"
 languageCode = "en-us"
 title = "Elias Watson"
 theme = "anubis"
