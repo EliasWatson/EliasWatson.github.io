@@ -1,0 +1,47 @@
+baseURL = "https://eliaswatson.dev/"
+languageCode = "en-us"
+title = "Elias Watson"
+theme = "anubis"
+
+[author]
+name = "Elias Watson"
+
+[params]
+author = "Elias Watson"
+description = "Ramblings of Elias Watson"
+dateFormat = "2006-01-02"
+style = "auto"
+readMore = false
+readNextPosts = 3
+copyCodeButton = true
+rssAsSocialIcon = true
+
+[[params.social]]
+id = "github"
+url = "https://github.com/EliasWatson"
+
+[menu]
+[[menu.main]]
+identifier = "about"
+name = "About"
+url = "/about/"
+weight = 1
+
+[[menu.main]]
+identifier = "tags"
+name = "Tags"
+url = "/tags/"
+weight = 2
+
+[[menu.main]]
+identifier = "posts"
+name = "Posts"
+url = "/posts/"
+weight = 3
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+
+[markup.goldmark.renderer]
+unsafe = true
