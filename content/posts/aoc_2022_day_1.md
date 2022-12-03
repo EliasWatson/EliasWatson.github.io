@@ -57,7 +57,7 @@ The only difference is that we sum the top three calorie counts instead of just 
 (define (sum nums) (apply + nums))
 
 ; Get the top N largest numbers
-(define (largest-nums nums n) (take (sort nums) n))
+(define (largest-nums nums n) (take (sort nums >) n))
 
 ; Sum the top three largest calorie counts
 (sum (largest-nums (get-calorie-list) 3))
