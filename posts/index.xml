@@ -57,4 +57,160 @@ The only difference is that we sum the top three calorie counts instead of just 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Sum the top three largest calorie counts&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (largest-nums (get-calorie-list) &lt;span style="color:#ae81ff">3&lt;/span>))
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Advent of Code 2022 - Day 2</title><link>https://eliaswatson.dev/posts/aoc_2022_day_2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://eliaswatson.dev/posts/aoc_2022_day_2/</guid><description>&lt;h1 id="part-1" >Part 1
+&lt;span>
+&lt;a href="#part-1">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">require&lt;/span> racket/string)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; PARSING&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (parse-choice c)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#66d9ef">or&lt;/span> (equal? c &lt;span style="color:#e6db74">&amp;#34;A&amp;#34;&lt;/span>) (equal? c &lt;span style="color:#e6db74">&amp;#34;X&amp;#34;&lt;/span>)) &lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#75715e">; Rock -&amp;gt; 0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#66d9ef">or&lt;/span> (equal? c &lt;span style="color:#e6db74">&amp;#34;B&amp;#34;&lt;/span>) (equal? c &lt;span style="color:#e6db74">&amp;#34;Y&amp;#34;&lt;/span>)) &lt;span style="color:#ae81ff">1&lt;/span>] &lt;span style="color:#75715e">; Paper -&amp;gt; 1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#66d9ef">or&lt;/span> (equal? c &lt;span style="color:#e6db74">&amp;#34;C&amp;#34;&lt;/span>) (equal? c &lt;span style="color:#e6db74">&amp;#34;Z&amp;#34;&lt;/span>)) &lt;span style="color:#ae81ff">2&lt;/span>] &lt;span style="color:#75715e">; Scissors -&amp;gt; 2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">-1&lt;/span>]))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Example: &amp;#34;B X&amp;#34; -&amp;gt; &amp;#39;(1 0)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (parse-strategy-line line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (map parse-choice (string-split line)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; IO&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (read-all-lines)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (string? line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons line (read-all-lines))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>())))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (read-strategies)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (map parse-strategy-line (read-all-lines)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; SCORING&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; The winning choice can be calculated by just adding 1 and modulo&amp;#39;ing by 3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 0 (Rock) is beat by 1 (Paper)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 1 (Paper) is beat by 2 (Scissors)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 2 (Scissors) is beat by 0 (Rock)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (winning-choice n) (modulo (+ n &lt;span style="color:#ae81ff">1&lt;/span>) &lt;span style="color:#ae81ff">3&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Since rock gets 1 point, paper gets 2, and scissors gets 3, we can just&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; add one to our numeric representation of the choices&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-choice n) (+ n &lt;span style="color:#ae81ff">1&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-outcome other you)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ((= you (winning-choice other)) &lt;span style="color:#ae81ff">6&lt;/span>) &lt;span style="color:#75715e">; 6 points for winning&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ((= you other) &lt;span style="color:#ae81ff">3&lt;/span>) &lt;span style="color:#75715e">; 3 points for drawing&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>))) &lt;span style="color:#75715e">; No points for losing&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-round other you)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (score-choice you)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (score-outcome other you)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-rounds rounds)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (map (&lt;span style="color:#66d9ef">lambda&lt;/span> (r) (apply score-round r)) rounds))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; MAIN&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum nums) (apply + nums))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (score-rounds (read-strategies)))
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >Part 2
+&lt;span>
+&lt;a href="#part-2">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">require&lt;/span> racket/string)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; LOGIC&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; The winning choice can be calculated by just adding 1 and modulo&amp;#39;ing by 3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 0 (Rock) is beat by 1 (Paper)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 1 (Paper) is beat by 2 (Scissors)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 2 (Scissors) is beat by 0 (Rock)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (winning-choice n)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (modulo (+ n &lt;span style="color:#ae81ff">1&lt;/span>) &lt;span style="color:#ae81ff">3&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Likewise, the losing choice can be calculated by adding 2 and modulo&amp;#39;ing by 3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 0 (Rock) beats 2 (Scissors)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 1 (Paper) beats 0 (Rock)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 2 (Scissors) beats 1 (Paper)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (losing-choice n)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (modulo (+ n &lt;span style="color:#ae81ff">2&lt;/span>) &lt;span style="color:#ae81ff">3&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; PARSING&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (parse-choice c)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(equal? c &lt;span style="color:#e6db74">&amp;#34;A&amp;#34;&lt;/span>) &lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#75715e">; Rock -&amp;gt; 0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(equal? c &lt;span style="color:#e6db74">&amp;#34;B&amp;#34;&lt;/span>) &lt;span style="color:#ae81ff">1&lt;/span>] &lt;span style="color:#75715e">; Paper -&amp;gt; 1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(equal? c &lt;span style="color:#e6db74">&amp;#34;C&amp;#34;&lt;/span>) &lt;span style="color:#ae81ff">2&lt;/span>] &lt;span style="color:#75715e">; Scissors -&amp;gt; 2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">-1&lt;/span>]))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (parse-outcome other outcome)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (list other
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(equal? outcome &lt;span style="color:#e6db74">&amp;#34;X&amp;#34;&lt;/span>) (losing-choice other)] &lt;span style="color:#75715e">; Lose&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(equal? outcome &lt;span style="color:#e6db74">&amp;#34;Y&amp;#34;&lt;/span>) other] &lt;span style="color:#75715e">; Draw&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(equal? outcome &lt;span style="color:#e6db74">&amp;#34;Z&amp;#34;&lt;/span>) (winning-choice other)] &lt;span style="color:#75715e">; Win&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">-1&lt;/span>])))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (parse-strategy-line line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([fields (string-split line)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (parse-outcome
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (parse-choice (list-ref fields &lt;span style="color:#ae81ff">0&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (list-ref fields &lt;span style="color:#ae81ff">1&lt;/span>))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; IO&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (read-all-lines)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (string? line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons line (read-all-lines))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>())))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (read-strategies)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (map parse-strategy-line (read-all-lines)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Since rock gets 1 point, paper gets 2, and scissors gets 3, we can just&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; add one to our numeric representation of the choices&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-choice n) (+ n &lt;span style="color:#ae81ff">1&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-outcome other you)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ((= you (winning-choice other)) &lt;span style="color:#ae81ff">6&lt;/span>) &lt;span style="color:#75715e">; 6 points for winning&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ((= you other) &lt;span style="color:#ae81ff">3&lt;/span>) &lt;span style="color:#75715e">; 3 points for drawing&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>))) &lt;span style="color:#75715e">; No points for losing&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-round other you)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (score-choice you)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (score-outcome other you)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-rounds rounds)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (map (&lt;span style="color:#66d9ef">lambda&lt;/span> (r) (apply score-round r)) rounds))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; MAIN&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum nums) (apply + nums))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (score-rounds (read-strategies)))
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
