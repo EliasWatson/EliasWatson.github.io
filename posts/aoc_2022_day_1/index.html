@@ -46,7 +46,7 @@ The only difference is that we sum the top three calorie counts instead of just 
 </span></span><span style=display:flex><span>(<span style=color:#66d9ef>define</span> (sum nums) (apply + nums))
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>; Get the top N largest numbers</span>
-</span></span><span style=display:flex><span>(<span style=color:#66d9ef>define</span> (largest-nums nums n) (take (sort nums) n))
+</span></span><span style=display:flex><span>(<span style=color:#66d9ef>define</span> (largest-nums nums n) (take (sort nums &gt;) n))
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>; Sum the top three largest calorie counts</span>
 </span></span><span style=display:flex><span>(sum (largest-nums (get-calorie-list) <span style=color:#ae81ff>3</span>))
