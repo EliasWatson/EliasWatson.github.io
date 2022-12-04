@@ -220,4 +220,90 @@ The only difference is that we sum the top three calorie counts instead of just 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum nums) (apply + nums))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (score-rounds (read-strategies)))
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Advent of Code 2022 - Day 3</title><link>https://eliaswatson.dev/posts/aoc_2022_day_3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://eliaswatson.dev/posts/aoc_2022_day_3/</guid><description>&lt;h1 id="part-1" >Part 1
+&lt;span>
+&lt;a href="#part-1">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">require&lt;/span> racket/set)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; IO&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-input-lines)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (string? line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons line (get-input-lines))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>())))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; DUPLICATE FINDING&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (split-string-in-half s)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([half-index (/ (string-length s) &lt;span style="color:#ae81ff">2&lt;/span>)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (list
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (substring s &lt;span style="color:#ae81ff">0&lt;/span> half-index)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (substring s half-index))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (chars-in-both-strings a b)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (set-intersect
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (string-&amp;gt;list a)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (string-&amp;gt;list b)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (find-duplicate-in-rucksack s)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (apply chars-in-both-strings (split-string-in-half s)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; PRIORITY&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (item-priority c)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([i (char-&amp;gt;integer c)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (&amp;lt; i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\A&lt;/span>)) &lt;span style="color:#ae81ff">27&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>)) &lt;span style="color:#ae81ff">1&lt;/span>))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (rucksack-priority s)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (item-priority (car (find-duplicate-in-rucksack s))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; MAIN&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(apply + (map rucksack-priority (get-input-lines)))
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >Part 2
+&lt;span>
+&lt;a href="#part-2">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">require&lt;/span> racket/set)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; IO&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-input-lines)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (string? line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons line (get-input-lines))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>())))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; GROUPING&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (into-groups elves)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (not (empty? elves))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons (take elves &lt;span style="color:#ae81ff">3&lt;/span>) (into-groups (drop elves &lt;span style="color:#ae81ff">3&lt;/span>)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>()))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (duplicate-char-in-strings strs)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (car (apply set-intersect (map string-&amp;gt;list strs))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; PRIORITY&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (item-priority c)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([i (char-&amp;gt;integer c)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (&amp;lt; i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\A&lt;/span>)) &lt;span style="color:#ae81ff">27&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>)) &lt;span style="color:#ae81ff">1&lt;/span>))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (group-priority g)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (item-priority (duplicate-char-in-strings g)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; MAIN&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(apply + (map group-priority (into-groups (get-input-lines))))
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
