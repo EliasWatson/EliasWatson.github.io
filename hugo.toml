@@ -10,6 +10,7 @@ name = "Elias Watson"
 author = "Elias Watson"
 description = "Ramblings of Elias Watson"
 dateFormat = "2006-01-02"
+mainSections = ["posts", "projects"]
 style = "auto"
 readMore = false
 readNextPosts = 3
