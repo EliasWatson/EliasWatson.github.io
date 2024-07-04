@@ -1,305 +1,317 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Elias Watson</title><link>https://eliaswatson.dev/</link><description>Elias Watson</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 04 Dec 2022 16:00:00 -0500</lastBuildDate><atom:link href="https://eliaswatson.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code 2022 - Day 3</title><link>https://eliaswatson.dev/posts/aoc_2022_day_3/</link><pubDate>Sun, 04 Dec 2022 16:00:00 -0500</pubDate><guid>https://eliaswatson.dev/posts/aoc_2022_day_3/</guid><description>&lt;h1 id="part-1" >Part 1
-&lt;span>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Elias Watson</title><link>/</link><description>Elias Watson</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 04 Dec 2022 16:00:00 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code 2022 - Day 3</title><link>/posts/aoc_2022_day_3/</link><pubDate>Sun, 04 Dec 2022 16:00:00 -0500</pubDate><guid>/posts/aoc_2022_day_3/</guid><description>&lt;h1 id="part-1" >
+&lt;div>
 &lt;a href="#part-1">
-&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+##
 &lt;/a>
-&lt;/span>
-&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">require&lt;/span> racket/set)
+Part 1
+&lt;/div>
+&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">require&lt;/span> racket/set)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; IO&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-input-lines)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (string? line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons line (get-input-lines))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>())))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; IO&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (get-input-lines)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">let&lt;/span> ([line (&lt;span style="color:#ff5c57">read-line&lt;/span>)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">if&lt;/span> (&lt;span style="color:#ff5c57">string?&lt;/span> line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">cons&lt;/span> line (get-input-lines))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ff6ac1">&amp;#39;&lt;/span>())))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; DUPLICATE FINDING&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (split-string-in-half s)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([half-index (/ (string-length s) &lt;span style="color:#ae81ff">2&lt;/span>)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (list
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (substring s &lt;span style="color:#ae81ff">0&lt;/span> half-index)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (substring s half-index))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; DUPLICATE FINDING&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (split-string-in-half s)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">let&lt;/span> ([half-index (&lt;span style="color:#ff5c57">/&lt;/span> (&lt;span style="color:#ff5c57">string-length&lt;/span> s) &lt;span style="color:#ff9f43">2&lt;/span>)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">list&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">substring&lt;/span> s &lt;span style="color:#ff9f43">0&lt;/span> half-index)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">substring&lt;/span> s half-index))))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (chars-in-both-strings a b)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (set-intersect
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (string-&amp;gt;list a)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (string-&amp;gt;list b)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (chars-in-both-strings a b)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">set-intersect&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">string-&amp;gt;list&lt;/span> a)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">string-&amp;gt;list&lt;/span> b)))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (find-duplicate-in-rucksack s)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (apply chars-in-both-strings (split-string-in-half s)))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; PRIORITY&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (item-priority c)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([i (char-&amp;gt;integer c)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (&amp;lt; i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\A&lt;/span>)) &lt;span style="color:#ae81ff">27&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>)) &lt;span style="color:#ae81ff">1&lt;/span>))))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (rucksack-priority s)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (item-priority (car (find-duplicate-in-rucksack s))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (find-duplicate-in-rucksack s)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">apply&lt;/span> chars-in-both-strings (split-string-in-half s)))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; MAIN&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(apply + (map rucksack-priority (get-input-lines)))&lt;span style="color:#960050;background-color:#1e0010">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >Part 2
-&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; PRIORITY&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (item-priority c)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">let&lt;/span> ([i (&lt;span style="color:#ff5c57">char-&amp;gt;integer&lt;/span> c)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">if&lt;/span> (&lt;span style="color:#ff5c57">&amp;lt;&lt;/span> i (&lt;span style="color:#ff5c57">char-&amp;gt;integer&lt;/span> &lt;span style="color:#5af78e">#\a&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">+&lt;/span> (&lt;span style="color:#ff5c57">-&lt;/span> i (&lt;span style="color:#ff5c57">char-&amp;gt;integer&lt;/span> &lt;span style="color:#5af78e">#\A&lt;/span>)) &lt;span style="color:#ff9f43">27&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">+&lt;/span> (&lt;span style="color:#ff5c57">-&lt;/span> i (&lt;span style="color:#ff5c57">char-&amp;gt;integer&lt;/span> &lt;span style="color:#5af78e">#\a&lt;/span>)) &lt;span style="color:#ff9f43">1&lt;/span>))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (rucksack-priority s)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (item-priority (&lt;span style="color:#ff5c57">car&lt;/span> (find-duplicate-in-rucksack s))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; MAIN&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff5c57">apply&lt;/span> &lt;span style="color:#ff5c57">+&lt;/span> (&lt;span style="color:#ff5c57">map&lt;/span> rucksack-priority (get-input-lines)))&lt;span style="color:#ff5c57">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >
+&lt;div>
 &lt;a href="#part-2">
-&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+##
 &lt;/a>
-&lt;/span>
-&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">require&lt;/span> racket/set)
+Part 2
+&lt;/div>
+&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">require&lt;/span> racket/set)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; IO&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-input-lines)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (string? line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons line (get-input-lines))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>())))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; IO&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (get-input-lines)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">let&lt;/span> ([line (&lt;span style="color:#ff5c57">read-line&lt;/span>)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">if&lt;/span> (&lt;span style="color:#ff5c57">string?&lt;/span> line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">cons&lt;/span> line (get-input-lines))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ff6ac1">&amp;#39;&lt;/span>())))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; GROUPING&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (into-groups elves)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (not (empty? elves))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons (take elves &lt;span style="color:#ae81ff">3&lt;/span>) (into-groups (drop elves &lt;span style="color:#ae81ff">3&lt;/span>)))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>()))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; GROUPING&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (into-groups elves)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">if&lt;/span> (&lt;span style="color:#ff5c57">not&lt;/span> (&lt;span style="color:#ff5c57">empty?&lt;/span> elves))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">cons&lt;/span> (&lt;span style="color:#ff5c57">take&lt;/span> elves &lt;span style="color:#ff9f43">3&lt;/span>) (into-groups (&lt;span style="color:#ff5c57">drop&lt;/span> elves &lt;span style="color:#ff9f43">3&lt;/span>)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ff6ac1">&amp;#39;&lt;/span>()))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (duplicate-char-in-strings strs)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (car (apply set-intersect (map string-&amp;gt;list strs))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (duplicate-char-in-strings strs)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">car&lt;/span> (&lt;span style="color:#ff5c57">apply&lt;/span> &lt;span style="color:#ff5c57">set-intersect&lt;/span> (&lt;span style="color:#ff5c57">map&lt;/span> &lt;span style="color:#ff5c57">string-&amp;gt;list&lt;/span> strs))))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; PRIORITY&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (item-priority c)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([i (char-&amp;gt;integer c)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (&amp;lt; i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\A&lt;/span>)) &lt;span style="color:#ae81ff">27&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>)) &lt;span style="color:#ae81ff">1&lt;/span>))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; PRIORITY&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (item-priority c)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">let&lt;/span> ([i (&lt;span style="color:#ff5c57">char-&amp;gt;integer&lt;/span> c)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">if&lt;/span> (&lt;span style="color:#ff5c57">&amp;lt;&lt;/span> i (&lt;span style="color:#ff5c57">char-&amp;gt;integer&lt;/span> &lt;span style="color:#5af78e">#\a&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">+&lt;/span> (&lt;span style="color:#ff5c57">-&lt;/span> i (&lt;span style="color:#ff5c57">char-&amp;gt;integer&lt;/span> &lt;span style="color:#5af78e">#\A&lt;/span>)) &lt;span style="color:#ff9f43">27&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">+&lt;/span> (&lt;span style="color:#ff5c57">-&lt;/span> i (&lt;span style="color:#ff5c57">char-&amp;gt;integer&lt;/span> &lt;span style="color:#5af78e">#\a&lt;/span>)) &lt;span style="color:#ff9f43">1&lt;/span>))))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (group-priority g)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (group-priority g)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (item-priority (duplicate-char-in-strings g)))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; MAIN&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(apply + (map group-priority (into-groups (get-input-lines))))&lt;span style="color:#960050;background-color:#1e0010">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Advent of Code 2022 - Day 2</title><link>https://eliaswatson.dev/posts/aoc_2022_day_2/</link><pubDate>Sat, 03 Dec 2022 17:00:00 -0500</pubDate><guid>https://eliaswatson.dev/posts/aoc_2022_day_2/</guid><description>&lt;h1 id="part-1" >Part 1
-&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; MAIN&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff5c57">apply&lt;/span> &lt;span style="color:#ff5c57">+&lt;/span> (&lt;span style="color:#ff5c57">map&lt;/span> group-priority (into-groups (get-input-lines))))&lt;span style="color:#ff5c57">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Advent of Code 2022 - Day 2</title><link>/posts/aoc_2022_day_2/</link><pubDate>Sat, 03 Dec 2022 17:00:00 -0500</pubDate><guid>/posts/aoc_2022_day_2/</guid><description>&lt;h1 id="part-1" >
+&lt;div>
 &lt;a href="#part-1">
-&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+##
 &lt;/a>
-&lt;/span>
-&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">require&lt;/span> racket/string)
+Part 1
+&lt;/div>
+&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">require&lt;/span> racket/string)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; PARSING&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; PARSING&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (parse-choice c)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#66d9ef">or&lt;/span> (equal? c &lt;span style="color:#e6db74">&amp;#34;A&amp;#34;&lt;/span>) (equal? c &lt;span style="color:#e6db74">&amp;#34;X&amp;#34;&lt;/span>)) &lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#75715e">; Rock -&amp;gt; 0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#66d9ef">or&lt;/span> (equal? c &lt;span style="color:#e6db74">&amp;#34;B&amp;#34;&lt;/span>) (equal? c &lt;span style="color:#e6db74">&amp;#34;Y&amp;#34;&lt;/span>)) &lt;span style="color:#ae81ff">1&lt;/span>] &lt;span style="color:#75715e">; Paper -&amp;gt; 1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#66d9ef">or&lt;/span> (equal? c &lt;span style="color:#e6db74">&amp;#34;C&amp;#34;&lt;/span>) (equal? c &lt;span style="color:#e6db74">&amp;#34;Z&amp;#34;&lt;/span>)) &lt;span style="color:#ae81ff">2&lt;/span>] &lt;span style="color:#75715e">; Scissors -&amp;gt; 2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">-1&lt;/span>]))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (parse-choice c)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#ff6ac1">or&lt;/span> (&lt;span style="color:#ff5c57">equal?&lt;/span> c &lt;span style="color:#5af78e">&amp;#34;A&amp;#34;&lt;/span>) (&lt;span style="color:#ff5c57">equal?&lt;/span> c &lt;span style="color:#5af78e">&amp;#34;X&amp;#34;&lt;/span>)) &lt;span style="color:#ff9f43">0&lt;/span>] &lt;span style="color:#78787e">; Rock -&amp;gt; 0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#ff6ac1">or&lt;/span> (&lt;span style="color:#ff5c57">equal?&lt;/span> c &lt;span style="color:#5af78e">&amp;#34;B&amp;#34;&lt;/span>) (&lt;span style="color:#ff5c57">equal?&lt;/span> c &lt;span style="color:#5af78e">&amp;#34;Y&amp;#34;&lt;/span>)) &lt;span style="color:#ff9f43">1&lt;/span>] &lt;span style="color:#78787e">; Paper -&amp;gt; 1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#ff6ac1">or&lt;/span> (&lt;span style="color:#ff5c57">equal?&lt;/span> c &lt;span style="color:#5af78e">&amp;#34;C&amp;#34;&lt;/span>) (&lt;span style="color:#ff5c57">equal?&lt;/span> c &lt;span style="color:#5af78e">&amp;#34;Z&amp;#34;&lt;/span>)) &lt;span style="color:#ff9f43">2&lt;/span>] &lt;span style="color:#78787e">; Scissors -&amp;gt; 2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#ff6ac1">else&lt;/span> &lt;span style="color:#ff9f43">-1&lt;/span>]))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Example: &amp;#34;B X&amp;#34; -&amp;gt; &amp;#39;(1 0)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (parse-strategy-line line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (map parse-choice (string-split line)))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; IO&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (read-all-lines)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (string? line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons line (read-all-lines))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>())))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (read-strategies)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (map parse-strategy-line (read-all-lines)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Example: &amp;#34;B X&amp;#34; -&amp;gt; &amp;#39;(1 0)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (parse-strategy-line line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">map&lt;/span> parse-choice (&lt;span style="color:#ff5c57">string-split&lt;/span> line)))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; SCORING&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; IO&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; The winning choice can be calculated by just adding 1 and modulo&amp;#39;ing by 3&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 0 (Rock) is beat by 1 (Paper)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 1 (Paper) is beat by 2 (Scissors)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 2 (Scissors) is beat by 0 (Rock)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (winning-choice n) (modulo (+ n &lt;span style="color:#ae81ff">1&lt;/span>) &lt;span style="color:#ae81ff">3&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (read-all-lines)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">let&lt;/span> ([line (&lt;span style="color:#ff5c57">read-line&lt;/span>)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">if&lt;/span> (&lt;span style="color:#ff5c57">string?&lt;/span> line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">cons&lt;/span> line (read-all-lines))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ff6ac1">&amp;#39;&lt;/span>())))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Since rock gets 1 point, paper gets 2, and scissors gets 3, we can just&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; add one to our numeric representation of the choices&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-choice n) (+ n &lt;span style="color:#ae81ff">1&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (read-strategies)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">map&lt;/span> parse-strategy-line (read-all-lines)))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-outcome other you)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ((= you (winning-choice other)) &lt;span style="color:#ae81ff">6&lt;/span>) &lt;span style="color:#75715e">; 6 points for winning&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ((= you other) &lt;span style="color:#ae81ff">3&lt;/span>) &lt;span style="color:#75715e">; 3 points for drawing&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>))) &lt;span style="color:#75715e">; No points for losing&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-round other you)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (score-choice you)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; SCORING&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; The winning choice can be calculated by just adding 1 and modulo&amp;#39;ing by 3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; 0 (Rock) is beat by 1 (Paper)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; 1 (Paper) is beat by 2 (Scissors)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; 2 (Scissors) is beat by 0 (Rock)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (winning-choice n) (&lt;span style="color:#ff5c57">modulo&lt;/span> (&lt;span style="color:#ff5c57">+&lt;/span> n &lt;span style="color:#ff9f43">1&lt;/span>) &lt;span style="color:#ff9f43">3&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Since rock gets 1 point, paper gets 2, and scissors gets 3, we can just&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; add one to our numeric representation of the choices&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (score-choice n) (&lt;span style="color:#ff5c57">+&lt;/span> n &lt;span style="color:#ff9f43">1&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (score-outcome other you)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ((&lt;span style="color:#ff5c57">=&lt;/span> you (winning-choice other)) &lt;span style="color:#ff9f43">6&lt;/span>) &lt;span style="color:#78787e">; 6 points for winning&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ((&lt;span style="color:#ff5c57">=&lt;/span> you other) &lt;span style="color:#ff9f43">3&lt;/span>) &lt;span style="color:#78787e">; 3 points for drawing&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">else&lt;/span> &lt;span style="color:#ff9f43">0&lt;/span>))) &lt;span style="color:#78787e">; No points for losing&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (score-round other you)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">+&lt;/span> (score-choice you)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (score-outcome other you)))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-rounds rounds)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (map (&lt;span style="color:#66d9ef">lambda&lt;/span> (r) (apply score-round r)) rounds))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (score-rounds rounds)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">map&lt;/span> (&lt;span style="color:#ff6ac1">lambda&lt;/span> (r) (&lt;span style="color:#ff5c57">apply&lt;/span> score-round r)) rounds))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; MAIN&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; MAIN&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum nums) (apply + nums))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (sum nums) (&lt;span style="color:#ff5c57">apply&lt;/span> &lt;span style="color:#ff5c57">+&lt;/span> nums))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (score-rounds (read-strategies)))&lt;span style="color:#960050;background-color:#1e0010">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >Part 2
-&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (score-rounds (read-strategies)))&lt;span style="color:#ff5c57">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >
+&lt;div>
 &lt;a href="#part-2">
-&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+##
 &lt;/a>
-&lt;/span>
-&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">require&lt;/span> racket/string)
+Part 2
+&lt;/div>
+&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">require&lt;/span> racket/string)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; LOGIC&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; LOGIC&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; The winning choice can be calculated by just adding 1 and modulo&amp;#39;ing by 3&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 0 (Rock) is beat by 1 (Paper)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 1 (Paper) is beat by 2 (Scissors)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 2 (Scissors) is beat by 0 (Rock)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (winning-choice n)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (modulo (+ n &lt;span style="color:#ae81ff">1&lt;/span>) &lt;span style="color:#ae81ff">3&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; The winning choice can be calculated by just adding 1 and modulo&amp;#39;ing by 3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; 0 (Rock) is beat by 1 (Paper)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; 1 (Paper) is beat by 2 (Scissors)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; 2 (Scissors) is beat by 0 (Rock)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (winning-choice n)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">modulo&lt;/span> (&lt;span style="color:#ff5c57">+&lt;/span> n &lt;span style="color:#ff9f43">1&lt;/span>) &lt;span style="color:#ff9f43">3&lt;/span>))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Likewise, the losing choice can be calculated by adding 2 and modulo&amp;#39;ing by 3&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 0 (Rock) beats 2 (Scissors)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 1 (Paper) beats 0 (Rock)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; 2 (Scissors) beats 1 (Paper)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (losing-choice n)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (modulo (+ n &lt;span style="color:#ae81ff">2&lt;/span>) &lt;span style="color:#ae81ff">3&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Likewise, the losing choice can be calculated by adding 2 and modulo&amp;#39;ing by 3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; 0 (Rock) beats 2 (Scissors)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; 1 (Paper) beats 0 (Rock)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; 2 (Scissors) beats 1 (Paper)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (losing-choice n)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">modulo&lt;/span> (&lt;span style="color:#ff5c57">+&lt;/span> n &lt;span style="color:#ff9f43">2&lt;/span>) &lt;span style="color:#ff9f43">3&lt;/span>))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; PARSING&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; PARSING&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (parse-choice c)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(equal? c &lt;span style="color:#e6db74">&amp;#34;A&amp;#34;&lt;/span>) &lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#75715e">; Rock -&amp;gt; 0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(equal? c &lt;span style="color:#e6db74">&amp;#34;B&amp;#34;&lt;/span>) &lt;span style="color:#ae81ff">1&lt;/span>] &lt;span style="color:#75715e">; Paper -&amp;gt; 1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(equal? c &lt;span style="color:#e6db74">&amp;#34;C&amp;#34;&lt;/span>) &lt;span style="color:#ae81ff">2&lt;/span>] &lt;span style="color:#75715e">; Scissors -&amp;gt; 2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">-1&lt;/span>]))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (parse-choice c)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#ff5c57">equal?&lt;/span> c &lt;span style="color:#5af78e">&amp;#34;A&amp;#34;&lt;/span>) &lt;span style="color:#ff9f43">0&lt;/span>] &lt;span style="color:#78787e">; Rock -&amp;gt; 0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#ff5c57">equal?&lt;/span> c &lt;span style="color:#5af78e">&amp;#34;B&amp;#34;&lt;/span>) &lt;span style="color:#ff9f43">1&lt;/span>] &lt;span style="color:#78787e">; Paper -&amp;gt; 1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#ff5c57">equal?&lt;/span> c &lt;span style="color:#5af78e">&amp;#34;C&amp;#34;&lt;/span>) &lt;span style="color:#ff9f43">2&lt;/span>] &lt;span style="color:#78787e">; Scissors -&amp;gt; 2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#ff6ac1">else&lt;/span> &lt;span style="color:#ff9f43">-1&lt;/span>]))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (parse-outcome other outcome)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (list other
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(equal? outcome &lt;span style="color:#e6db74">&amp;#34;X&amp;#34;&lt;/span>) (losing-choice other)] &lt;span style="color:#75715e">; Lose&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(equal? outcome &lt;span style="color:#e6db74">&amp;#34;Y&amp;#34;&lt;/span>) other] &lt;span style="color:#75715e">; Draw&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(equal? outcome &lt;span style="color:#e6db74">&amp;#34;Z&amp;#34;&lt;/span>) (winning-choice other)] &lt;span style="color:#75715e">; Win&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">-1&lt;/span>])))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (parse-outcome other outcome)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">list&lt;/span> other
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#ff5c57">equal?&lt;/span> outcome &lt;span style="color:#5af78e">&amp;#34;X&amp;#34;&lt;/span>) (losing-choice other)] &lt;span style="color:#78787e">; Lose&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#ff5c57">equal?&lt;/span> outcome &lt;span style="color:#5af78e">&amp;#34;Y&amp;#34;&lt;/span>) other] &lt;span style="color:#78787e">; Draw&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#ff5c57">equal?&lt;/span> outcome &lt;span style="color:#5af78e">&amp;#34;Z&amp;#34;&lt;/span>) (winning-choice other)] &lt;span style="color:#78787e">; Win&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#ff6ac1">else&lt;/span> &lt;span style="color:#ff9f43">-1&lt;/span>])))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (parse-strategy-line line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([fields (string-split line)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (parse-strategy-line line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">let&lt;/span> ([fields (&lt;span style="color:#ff5c57">string-split&lt;/span> line)])
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (parse-outcome
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (parse-choice (list-ref fields &lt;span style="color:#ae81ff">0&lt;/span>))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (list-ref fields &lt;span style="color:#ae81ff">1&lt;/span>))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (parse-choice (&lt;span style="color:#ff5c57">list-ref&lt;/span> fields &lt;span style="color:#ff9f43">0&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">list-ref&lt;/span> fields &lt;span style="color:#ff9f43">1&lt;/span>))))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; IO&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; IO&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (read-all-lines)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (string? line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons line (read-all-lines))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>())))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (read-all-lines)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">let&lt;/span> ([line (&lt;span style="color:#ff5c57">read-line&lt;/span>)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">if&lt;/span> (&lt;span style="color:#ff5c57">string?&lt;/span> line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">cons&lt;/span> line (read-all-lines))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ff6ac1">&amp;#39;&lt;/span>())))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (read-strategies)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (map parse-strategy-line (read-all-lines)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (read-strategies)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">map&lt;/span> parse-strategy-line (read-all-lines)))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Since rock gets 1 point, paper gets 2, and scissors gets 3, we can just&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; add one to our numeric representation of the choices&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-choice n) (+ n &lt;span style="color:#ae81ff">1&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Since rock gets 1 point, paper gets 2, and scissors gets 3, we can just&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; add one to our numeric representation of the choices&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (score-choice n) (&lt;span style="color:#ff5c57">+&lt;/span> n &lt;span style="color:#ff9f43">1&lt;/span>))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-outcome other you)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ((= you (winning-choice other)) &lt;span style="color:#ae81ff">6&lt;/span>) &lt;span style="color:#75715e">; 6 points for winning&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ((= you other) &lt;span style="color:#ae81ff">3&lt;/span>) &lt;span style="color:#75715e">; 3 points for drawing&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>))) &lt;span style="color:#75715e">; No points for losing&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (score-outcome other you)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ((&lt;span style="color:#ff5c57">=&lt;/span> you (winning-choice other)) &lt;span style="color:#ff9f43">6&lt;/span>) &lt;span style="color:#78787e">; 6 points for winning&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ((&lt;span style="color:#ff5c57">=&lt;/span> you other) &lt;span style="color:#ff9f43">3&lt;/span>) &lt;span style="color:#78787e">; 3 points for drawing&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">else&lt;/span> &lt;span style="color:#ff9f43">0&lt;/span>))) &lt;span style="color:#78787e">; No points for losing&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-round other you)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (score-choice you)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (score-round other you)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">+&lt;/span> (score-choice you)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (score-outcome other you)))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (score-rounds rounds)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (map (&lt;span style="color:#66d9ef">lambda&lt;/span> (r) (apply score-round r)) rounds))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (score-rounds rounds)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">map&lt;/span> (&lt;span style="color:#ff6ac1">lambda&lt;/span> (r) (&lt;span style="color:#ff5c57">apply&lt;/span> score-round r)) rounds))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; MAIN&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">;; MAIN&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum nums) (apply + nums))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (sum nums) (&lt;span style="color:#ff5c57">apply&lt;/span> &lt;span style="color:#ff5c57">+&lt;/span> nums))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (score-rounds (read-strategies)))&lt;span style="color:#960050;background-color:#1e0010">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Advent of Code 2022 - Day 1</title><link>https://eliaswatson.dev/posts/aoc_2022_day_1/</link><pubDate>Sat, 03 Dec 2022 13:00:00 -0500</pubDate><guid>https://eliaswatson.dev/posts/aoc_2022_day_1/</guid><description>&lt;p>This year I decided to solve &lt;a href="https://adventofcode.com/2022">Advent of Code&lt;/a> in &lt;a href="https://racket-lang.org">Racket&lt;/a>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (score-rounds (read-strategies)))&lt;span style="color:#ff5c57">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Advent of Code 2022 - Day 1</title><link>/posts/aoc_2022_day_1/</link><pubDate>Sat, 03 Dec 2022 13:00:00 -0500</pubDate><guid>/posts/aoc_2022_day_1/</guid><description>&lt;p>This year I decided to solve &lt;a href="https://adventofcode.com/2022">Advent of Code&lt;/a> in &lt;a href="https://racket-lang.org">Racket&lt;/a>.
 I&amp;rsquo;ve seen lots of people gush over how much they love Lisp, so I want to see what it&amp;rsquo;s all about.
 The functional paradigm isn&amp;rsquo;t completely foreign to me as I&amp;rsquo;ve written a few web apps in Elm and I&amp;rsquo;ve messed around with Haskell, but I&amp;rsquo;ve never used a Lisp for anything complex.&lt;/p>
-&lt;h1 id="part-1" >Part 1
-&lt;span>
+&lt;h1 id="part-1" >
+&lt;div>
 &lt;a href="#part-1">
-&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+##
 &lt;/a>
-&lt;/span>
-&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Sum integers from stdin until a blank line (or EOF) is encountered&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum-input-integers-until-break line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(non-empty-string? line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (string-&amp;gt;number line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (sum-input-integers-until-break (read-line)))]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>]))
+Part 1
+&lt;/div>
+&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Sum integers from stdin until a blank line (or EOF) is encountered&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (sum-input-integers-until-break line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#ff5c57">non-empty-string?&lt;/span> line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">+&lt;/span> (&lt;span style="color:#ff5c57">string-&amp;gt;number&lt;/span> line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (sum-input-integers-until-break (&lt;span style="color:#ff5c57">read-line&lt;/span>)))]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#ff6ac1">else&lt;/span> &lt;span style="color:#ff9f43">0&lt;/span>]))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Get a list of calories from stdin, stopping when EOF is encountered&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-calorie-list)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(eof-object? line) &lt;span style="color:#f92672">&amp;#39;&lt;/span>()]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> (cons (sum-input-integers-until-break line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Get a list of calories from stdin, stopping when EOF is encountered&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (get-calorie-list)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">let&lt;/span> ([line (&lt;span style="color:#ff5c57">read-line&lt;/span>)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#ff5c57">eof-object?&lt;/span> line) &lt;span style="color:#ff6ac1">&amp;#39;&lt;/span>()]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#ff6ac1">else&lt;/span> (&lt;span style="color:#ff5c57">cons&lt;/span> (sum-input-integers-until-break line)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (get-calorie-list))])))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Get the maximum calories&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(apply max (get-calorie-list))&lt;span style="color:#960050;background-color:#1e0010">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >Part 2
-&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Get the maximum calories&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff5c57">apply&lt;/span> &lt;span style="color:#ff5c57">max&lt;/span> (get-calorie-list))&lt;span style="color:#ff5c57">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >
+&lt;div>
 &lt;a href="#part-2">
-&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+##
 &lt;/a>
-&lt;/span>
-&lt;/h1>&lt;p>Part 2 is almost identical.
+Part 2
+&lt;/div>
+&lt;/h1>
+&lt;p>Part 2 is almost identical.
 The only difference is that we sum the top three calorie counts instead of just taking the maximum.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Sum integers from stdin until a blank line (or EOF) is encountered&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum-input-integers-until-break line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(non-empty-string? line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (string-&amp;gt;number line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (sum-input-integers-until-break (read-line)))]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>]))
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Sum integers from stdin until a blank line (or EOF) is encountered&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (sum-input-integers-until-break line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#ff5c57">non-empty-string?&lt;/span> line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff5c57">+&lt;/span> (&lt;span style="color:#ff5c57">string-&amp;gt;number&lt;/span> line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (sum-input-integers-until-break (&lt;span style="color:#ff5c57">read-line&lt;/span>)))]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#ff6ac1">else&lt;/span> &lt;span style="color:#ff9f43">0&lt;/span>]))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Get a list of calories from stdin, stopping when EOF is encountered&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-calorie-list)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(eof-object? line) &lt;span style="color:#f92672">&amp;#39;&lt;/span>()]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> (cons (sum-input-integers-until-break line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Get a list of calories from stdin, stopping when EOF is encountered&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (get-calorie-list)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">let&lt;/span> ([line (&lt;span style="color:#ff5c57">read-line&lt;/span>)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#ff6ac1">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(&lt;span style="color:#ff5c57">eof-object?&lt;/span> line) &lt;span style="color:#ff6ac1">&amp;#39;&lt;/span>()]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#ff6ac1">else&lt;/span> (&lt;span style="color:#ff5c57">cons&lt;/span> (sum-input-integers-until-break line)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (get-calorie-list))])))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Sum a list of numbers&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum nums) (apply + nums))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Sum a list of numbers&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (sum nums) (&lt;span style="color:#ff5c57">apply&lt;/span> &lt;span style="color:#ff5c57">+&lt;/span> nums))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Get the top N largest numbers&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (largest-nums nums n) (take (sort nums &amp;gt;) n))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Get the top N largest numbers&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#ff6ac1">define&lt;/span> (largest-nums nums n) (&lt;span style="color:#ff5c57">take&lt;/span> (&lt;span style="color:#ff5c57">sort&lt;/span> nums &lt;span style="color:#ff5c57">&amp;gt;&lt;/span>) n))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Sum the top three largest calorie counts&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (largest-nums (get-calorie-list) &lt;span style="color:#ae81ff">3&lt;/span>))&lt;span style="color:#960050;background-color:#1e0010">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>About</title><link>https://eliaswatson.dev/about/</link><pubDate>Sat, 20 Aug 2022 15:07:36 -0400</pubDate><guid>https://eliaswatson.dev/about/</guid><description>&lt;p>Hey!
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Sum the top three largest calorie counts&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (largest-nums (get-calorie-list) &lt;span style="color:#ff9f43">3&lt;/span>))&lt;span style="color:#ff5c57">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>About</title><link>/about/</link><pubDate>Sat, 20 Aug 2022 15:07:36 -0400</pubDate><guid>/about/</guid><description>&lt;p>Hey!
 My name is Elias Watson.
 I&amp;rsquo;m a guy in my 20&amp;rsquo;s currently living in Greenville, SC, USA.
 I have a bachelor&amp;rsquo;s degree in computer science from Bob Jones University.
