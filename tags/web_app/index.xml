@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Web_app on Elias Watson</title><link>/tags/web_app/</link><description>Elias Watson (Web_app)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 16 Sep 2021 12:00:00 -0500</lastBuildDate><atom:link href="/tags/web_app/index.xml" rel="self" type="application/rss+xml"/><item><title>Image Dataset Curator</title><link>/projects/image_curator/</link><pubDate>Thu, 16 Sep 2021 12:00:00 -0500</pubDate><guid>/projects/image_curator/</guid><description>&lt;p>&lt;a href="https://github.com/EliasWatson/Image-Curator">&lt;em>View this project on GitHub&lt;/em>&lt;/a>&lt;/p>
+&lt;p>I wrote this tool in a single weekend while being brand new to the programming language I used.&lt;/p>
+&lt;hr>
+&lt;p>Image Curator is a web app designed to quickly sort and edit image datasets.
+I created it after being frustrated with curating a large dataset for training a GAN.
+With my limited testing, I have been able to process 300+ images per hour, including setting custom crop regions for every image.&lt;/p>
+&lt;h2 id="features" >
+&lt;div>
+&lt;a href="#features">
+#
+&lt;/a>
+Features
+&lt;/div>
+&lt;/h2>
+&lt;ul>
+&lt;li>Approve/reject images&lt;/li>
+&lt;li>Set crop region&lt;/li>
+&lt;li>Set mode to fill in empty space in non-square images&lt;/li>
+&lt;li>Preview cropped region&lt;/li>
+&lt;li>Skip to first unprocessed image&lt;/li>
+&lt;li>Everything can be controlled with hotkeys, no mouse needed&lt;/li>
+&lt;li>Script to output final dataset, including crops&lt;/li>
+&lt;/ul>
+&lt;h2 id="screenshots" >
+&lt;div>
+&lt;a href="#screenshots">
+#
+&lt;/a>
+Screenshots
+&lt;/div>
+&lt;/h2>
+&lt;p>&lt;img src="https://eliaswatson.dev/image_curator/example_1.jpg" alt="">&lt;/p>
+&lt;p>&lt;img src="https://eliaswatson.dev/image_curator/example_2.jpg" alt="">&lt;/p>
+&lt;p>&lt;img src="https://eliaswatson.dev/image_curator/example_3.jpg" alt="">&lt;/p>
+&lt;p>&lt;img src="https://eliaswatson.dev/image_curator/example_4.png" alt="">&lt;/p></description></item></channel></rss>

@@ -335,7 +335,41 @@ The only difference is that we sum the top three calorie counts instead of just 
 The four control points (unmoving white circles) can be dragged to change the curve.
 The lines are rendered using 2D distance fields.&lt;/p>
 &lt;hr>
-&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/aVwxzDHniEw?si=lKBcgp903fc02blu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>&lt;/iframe></description></item><item><title>University Graphics Project</title><link>/projects/university_graphics_project/</link><pubDate>Sat, 01 May 2021 19:00:00 -0500</pubDate><guid>/projects/university_graphics_project/</guid><description>&lt;p>&lt;a href="https://github.com/EliasWatson/Graphics-Project">&lt;em>View this project on GitHub&lt;/em>&lt;/a>&lt;/p>
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/aVwxzDHniEw?si=lKBcgp903fc02blu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>&lt;/iframe></description></item><item><title>Image Dataset Curator</title><link>/projects/image_curator/</link><pubDate>Thu, 16 Sep 2021 12:00:00 -0500</pubDate><guid>/projects/image_curator/</guid><description>&lt;p>&lt;a href="https://github.com/EliasWatson/Image-Curator">&lt;em>View this project on GitHub&lt;/em>&lt;/a>&lt;/p>
+&lt;p>I wrote this tool in a single weekend while being brand new to the programming language I used.&lt;/p>
+&lt;hr>
+&lt;p>Image Curator is a web app designed to quickly sort and edit image datasets.
+I created it after being frustrated with curating a large dataset for training a GAN.
+With my limited testing, I have been able to process 300+ images per hour, including setting custom crop regions for every image.&lt;/p>
+&lt;h2 id="features" >
+&lt;div>
+&lt;a href="#features">
+#
+&lt;/a>
+Features
+&lt;/div>
+&lt;/h2>
+&lt;ul>
+&lt;li>Approve/reject images&lt;/li>
+&lt;li>Set crop region&lt;/li>
+&lt;li>Set mode to fill in empty space in non-square images&lt;/li>
+&lt;li>Preview cropped region&lt;/li>
+&lt;li>Skip to first unprocessed image&lt;/li>
+&lt;li>Everything can be controlled with hotkeys, no mouse needed&lt;/li>
+&lt;li>Script to output final dataset, including crops&lt;/li>
+&lt;/ul>
+&lt;h2 id="screenshots" >
+&lt;div>
+&lt;a href="#screenshots">
+#
+&lt;/a>
+Screenshots
+&lt;/div>
+&lt;/h2>
+&lt;p>&lt;img src="https://eliaswatson.dev/image_curator/example_1.jpg" alt="">&lt;/p>
+&lt;p>&lt;img src="https://eliaswatson.dev/image_curator/example_2.jpg" alt="">&lt;/p>
+&lt;p>&lt;img src="https://eliaswatson.dev/image_curator/example_3.jpg" alt="">&lt;/p>
+&lt;p>&lt;img src="https://eliaswatson.dev/image_curator/example_4.png" alt="">&lt;/p></description></item><item><title>University Graphics Project</title><link>/projects/university_graphics_project/</link><pubDate>Sat, 01 May 2021 19:00:00 -0500</pubDate><guid>/projects/university_graphics_project/</guid><description>&lt;p>&lt;a href="https://github.com/EliasWatson/Graphics-Project">&lt;em>View this project on GitHub&lt;/em>&lt;/a>&lt;/p>
 &lt;p>For my computer science independent study at Bob Jones University, I wrote a realistic realtime 3D renderer in C++ and OpenGL.
 I spent 148 hours on this project over the course of four months.&lt;/p>
 &lt;p>The program supports loading 3D scenes from GLTF files.
