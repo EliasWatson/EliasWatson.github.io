@@ -3,6 +3,7 @@ title: "Advent of Code 2022 - Day 1"
 date: 2022-12-03T13:00:00-05:00
 draft: false
 summary: Calorie Counting
+tags: ["advent_of_code", "racket"]
 ---
 
 This year I decided to solve [Advent of Code](https://adventofcode.com/2022) in [Racket](https://racket-lang.org).
