@@ -1,6 +1,6 @@
 ---
 title: "Advent of Code 2022 - Day 3"
-date: 2022-12-04T16:00:00-5:00
+date: 2022-12-04T16:00:00-05:00
 draft: false
 summary: Get Organized
 ---

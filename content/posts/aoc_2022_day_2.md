@@ -1,6 +1,6 @@
 ---
 title: "Advent of Code 2022 - Day 2"
-date: 2022-12-03T17:00:00-5:00
+date: 2022-12-03T17:00:00-05:00
 draft: false
 summary: Rock Paper Scissors
 ---
