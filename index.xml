@@ -330,9 +330,7 @@ The only difference is that we sum the top three calorie counts instead of just 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Sum the top three largest calorie counts&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (largest-nums (get-calorie-list) &lt;span style="color:#ff9f43">3&lt;/span>))&lt;span style="color:#ff5c57">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Bézier Curve Visualization</title><link>/projects/bezier_curve_visualization/</link><pubDate>Sat, 18 Sep 2021 12:00:00 -0500</pubDate><guid>/projects/bezier_curve_visualization/</guid><description>&lt;iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/NdG3zt?gui=true&amp;t=10&amp;paused=true&amp;muted=false" allowfullscreen>&lt;/iframe>
-&lt;p>&lt;em>Hover over the image above and click the play button in the bottom left&lt;/em>&lt;/p>
-&lt;hr>
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Bézier Curve Visualization</title><link>/projects/bezier_curve_visualization/</link><pubDate>Sat, 18 Sep 2021 12:00:00 -0500</pubDate><guid>/projects/bezier_curve_visualization/</guid><description>&lt;iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/NdG3zt?gui=true&amp;t=10&amp;paused=false&amp;muted=false" allowfullscreen>&lt;/iframe>
 &lt;p>After watching Freya Holmér&amp;rsquo;s video on Bézier curves &lt;em>(linked below)&lt;/em>, I was inspired to create a GPU shader based on her visualizations.
 The four control points (unmoving white circles) can be dragged to change the curve.
 The lines are rendered using 2D distance fields.&lt;/p>
