@@ -35,15 +35,15 @@ url = "/about/"
 weight = 1
 
 [[menu.main]]
-identifier = "tags"
-name = "Tags"
-url = "/tags/"
-weight = 2
-
-[[menu.main]]
 identifier = "posts"
 name = "Posts"
 url = "/posts/"
+weight = 2
+
+[[menu.main]]
+identifier = "tags"
+name = "Tags"
+url = "/tags/"
 weight = 3
 
 [taxonomies]
