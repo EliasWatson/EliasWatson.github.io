@@ -1,4 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Elias Watson</title><link>/</link><description>Elias Watson</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 04 Dec 2022 16:00:00 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code 2022 - Day 3</title><link>/posts/aoc_2022_day_3/</link><pubDate>Sun, 04 Dec 2022 16:00:00 -0500</pubDate><guid>/posts/aoc_2022_day_3/</guid><description>&lt;h1 id="part-1" >
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Elias Watson</title><link>/</link><description>Elias Watson</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 04 Jul 2024 17:03:12 -0400</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>About</title><link>/about/</link><pubDate>Thu, 04 Jul 2024 17:03:12 -0400</pubDate><guid>/about/</guid><description>&lt;p>Hey there!&lt;/p>
+&lt;p>I&amp;rsquo;m Elias Watson, a passionate programmer and technology enthusiast in my 20s, currently residing in Greenville, SC, USA.
+I graduated with a bachelor&amp;rsquo;s degree in computer science from Bob Jones University.&lt;/p>
+&lt;p>As a follower of Jesus, I strive to integrate my faith with my love for technology and science.
+My main interests lie in game development and computer graphics, but I have a wide range of passions.&lt;/p>
+&lt;p>I am language agnostic and pride myself on quickly picking up new languages and frameworks.
+Here are some of the technologies I have experience with:&lt;/p>
+&lt;ul>
+&lt;li>Python&lt;/li>
+&lt;li>TypeScript &amp;amp; JavaScript&lt;/li>
+&lt;li>C &amp;amp; C++&lt;/li>
+&lt;li>Rust&lt;/li>
+&lt;li>Lua&lt;/li>
+&lt;li>Java&lt;/li>
+&lt;li>Lisp&lt;/li>
+&lt;/ul>
+&lt;p>I also enjoy experimenting with more obscure programming languages like Elm, Odin, FORTH, Smalltalk, APL, and more.&lt;/p>
+&lt;p>Feel free to connect with me or check out my projects!&lt;/p>
+&lt;hr>
+&lt;p>&lt;em>Any opinions I express are solely my own and are not representative of my past, present, or future employers.&lt;/em>&lt;/p></description></item><item><title>Advent of Code 2022 - Day 3</title><link>/posts/aoc_2022_day_3/</link><pubDate>Sun, 04 Dec 2022 16:00:00 -0500</pubDate><guid>/posts/aoc_2022_day_3/</guid><description>&lt;h1 id="part-1" >
 &lt;div>
 &lt;a href="#part-1">
 ##
@@ -311,11 +330,4 @@ The only difference is that we sum the top three calorie counts instead of just 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#78787e">; Sum the top three largest calorie counts&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (largest-nums (get-calorie-list) &lt;span style="color:#ff9f43">3&lt;/span>))&lt;span style="color:#ff5c57">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>About</title><link>/about/</link><pubDate>Sat, 20 Aug 2022 15:07:36 -0400</pubDate><guid>/about/</guid><description>&lt;p>Hey!
-My name is Elias Watson.
-I&amp;rsquo;m a guy in my 20&amp;rsquo;s currently living in Greenville, SC, USA.
-I have a bachelor&amp;rsquo;s degree in computer science from Bob Jones University.
-I&amp;rsquo;m a programmer, technology/science enthusiast, and a follower of Jesus.&lt;/p>
-&lt;p>I am interested in almost every topic, including topics outside of technology and science, but my main computer science interests are in game development and computer graphics.
-I program primarily in Rust outside of my job, but I have experience in many languages.&lt;/p>
-&lt;p>&lt;em>Any opinions I express are solely my own and are not representative of my past, present, or future employers.&lt;/em>&lt;/p></description></item></channel></rss>
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
