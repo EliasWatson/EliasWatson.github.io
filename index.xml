@@ -1,70 +1,90 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Elias Watson</title><link>https://eliaswatson.dev/</link><description>Elias Watson</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://eliaswatson.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>About</title><link>https://eliaswatson.dev/about/</link><pubDate>Sat, 20 Aug 2022 15:07:36 -0400</pubDate><guid>https://eliaswatson.dev/about/</guid><description>&lt;p>Hey!
-My name is Elias Watson.
-I&amp;rsquo;m a guy in my 20&amp;rsquo;s currently living in Greenville, SC, USA.
-I have a bachelor&amp;rsquo;s degree in computer science from Bob Jones University.
-I&amp;rsquo;m a programmer, technology/science enthusiast, and a follower of Jesus.&lt;/p>
-&lt;p>I am interested in almost every topic, including topics outside of technology and science, but my main computer science interests are in game development and computer graphics.
-I program primarily in Rust outside of my job, but I have experience in many languages.&lt;/p>
-&lt;p>&lt;em>Any opinions I express are solely my own and are not representative of my past, present, or future employers.&lt;/em>&lt;/p></description></item><item><title>Advent of Code 2022 - Day 1</title><link>https://eliaswatson.dev/posts/aoc_2022_day_1/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://eliaswatson.dev/posts/aoc_2022_day_1/</guid><description>&lt;p>This year I decided to solve &lt;a href="https://adventofcode.com/2022">Advent of Code&lt;/a> in &lt;a href="https://racket-lang.org">Racket&lt;/a>.
-I&amp;rsquo;ve seen lots of people gush over how much they love Lisp, so I want to see what it&amp;rsquo;s all about.
-The functional paradigm isn&amp;rsquo;t completely foreign to me as I&amp;rsquo;ve written a few web apps in Elm and I&amp;rsquo;ve messed around with Haskell, but I&amp;rsquo;ve never used a Lisp for anything complex.&lt;/p>
-&lt;h1 id="part-1" >Part 1
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Elias Watson</title><link>https://eliaswatson.dev/</link><description>Elias Watson</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 04 Dec 2022 16:00:00 -0500</lastBuildDate><atom:link href="https://eliaswatson.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code 2022 - Day 3</title><link>https://eliaswatson.dev/posts/aoc_2022_day_3/</link><pubDate>Sun, 04 Dec 2022 16:00:00 -0500</pubDate><guid>https://eliaswatson.dev/posts/aoc_2022_day_3/</guid><description>&lt;h1 id="part-1" >Part 1
 &lt;span>
 &lt;a href="#part-1">
 &lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
 &lt;/a>
 &lt;/span>
-&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Sum integers from stdin until a blank line (or EOF) is encountered&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum-input-integers-until-break line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(non-empty-string? line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (string-&amp;gt;number line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (sum-input-integers-until-break (read-line)))]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>]))
+&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">require&lt;/span> racket/set)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Get a list of calories from stdin, stopping when EOF is encountered&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-calorie-list)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; IO&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-input-lines)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(eof-object? line) &lt;span style="color:#f92672">&amp;#39;&lt;/span>()]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> (cons (sum-input-integers-until-break line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (get-calorie-list))])))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (string? line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons line (get-input-lines))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>())))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Get the maximum calories&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(apply max (get-calorie-list))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >Part 2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; DUPLICATE FINDING&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (split-string-in-half s)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([half-index (/ (string-length s) &lt;span style="color:#ae81ff">2&lt;/span>)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (list
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (substring s &lt;span style="color:#ae81ff">0&lt;/span> half-index)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (substring s half-index))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (chars-in-both-strings a b)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (set-intersect
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (string-&amp;gt;list a)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (string-&amp;gt;list b)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (find-duplicate-in-rucksack s)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (apply chars-in-both-strings (split-string-in-half s)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; PRIORITY&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (item-priority c)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([i (char-&amp;gt;integer c)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (&amp;lt; i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\A&lt;/span>)) &lt;span style="color:#ae81ff">27&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>)) &lt;span style="color:#ae81ff">1&lt;/span>))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (rucksack-priority s)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (item-priority (car (find-duplicate-in-rucksack s))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; MAIN&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(apply + (map rucksack-priority (get-input-lines)))&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >Part 2
 &lt;span>
 &lt;a href="#part-2">
 &lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
 &lt;/a>
 &lt;/span>
-&lt;/h1>&lt;p>Part 2 is almost identical.
-The only difference is that we sum the top three calorie counts instead of just taking the maximum.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Sum integers from stdin until a blank line (or EOF) is encountered&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum-input-integers-until-break line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(non-empty-string? line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (string-&amp;gt;number line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (sum-input-integers-until-break (read-line)))]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>]))
+&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">require&lt;/span> racket/set)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Get a list of calories from stdin, stopping when EOF is encountered&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-calorie-list)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; IO&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-input-lines)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(eof-object? line) &lt;span style="color:#f92672">&amp;#39;&lt;/span>()]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> (cons (sum-input-integers-until-break line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (get-calorie-list))])))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (string? line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons line (get-input-lines))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>())))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Sum a list of numbers&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum nums) (apply + nums))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Get the top N largest numbers&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (largest-nums nums n) (take (sort nums &amp;gt;) n))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; GROUPING&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (into-groups elves)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (not (empty? elves))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons (take elves &lt;span style="color:#ae81ff">3&lt;/span>) (into-groups (drop elves &lt;span style="color:#ae81ff">3&lt;/span>)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>()))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Sum the top three largest calorie counts&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (largest-nums (get-calorie-list) &lt;span style="color:#ae81ff">3&lt;/span>))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Advent of Code 2022 - Day 2</title><link>https://eliaswatson.dev/posts/aoc_2022_day_2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://eliaswatson.dev/posts/aoc_2022_day_2/</guid><description>&lt;h1 id="part-1" >Part 1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (duplicate-char-in-strings strs)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (car (apply set-intersect (map string-&amp;gt;list strs))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; PRIORITY&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (item-priority c)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([i (char-&amp;gt;integer c)])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (&amp;lt; i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\A&lt;/span>)) &lt;span style="color:#ae81ff">27&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>)) &lt;span style="color:#ae81ff">1&lt;/span>))))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (group-priority g)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (item-priority (duplicate-char-in-strings g)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; MAIN&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(apply + (map group-priority (into-groups (get-input-lines))))&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Advent of Code 2022 - Day 2</title><link>https://eliaswatson.dev/posts/aoc_2022_day_2/</link><pubDate>Sat, 03 Dec 2022 17:00:00 -0500</pubDate><guid>https://eliaswatson.dev/posts/aoc_2022_day_2/</guid><description>&lt;h1 id="part-1" >Part 1
 &lt;span>
 &lt;a href="#part-1">
 &lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
@@ -132,8 +152,8 @@ The only difference is that we sum the top three calorie counts instead of just 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum nums) (apply + nums))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (score-rounds (read-strategies)))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >Part 2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (score-rounds (read-strategies)))&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >Part 2
 &lt;span>
 &lt;a href="#part-2">
 &lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
@@ -219,91 +239,71 @@ The only difference is that we sum the top three calorie counts instead of just 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum nums) (apply + nums))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (score-rounds (read-strategies)))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Advent of Code 2022 - Day 3</title><link>https://eliaswatson.dev/posts/aoc_2022_day_3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://eliaswatson.dev/posts/aoc_2022_day_3/</guid><description>&lt;h1 id="part-1" >Part 1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (score-rounds (read-strategies)))&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Advent of Code 2022 - Day 1</title><link>https://eliaswatson.dev/posts/aoc_2022_day_1/</link><pubDate>Sat, 03 Dec 2022 13:00:00 -0500</pubDate><guid>https://eliaswatson.dev/posts/aoc_2022_day_1/</guid><description>&lt;p>This year I decided to solve &lt;a href="https://adventofcode.com/2022">Advent of Code&lt;/a> in &lt;a href="https://racket-lang.org">Racket&lt;/a>.
+I&amp;rsquo;ve seen lots of people gush over how much they love Lisp, so I want to see what it&amp;rsquo;s all about.
+The functional paradigm isn&amp;rsquo;t completely foreign to me as I&amp;rsquo;ve written a few web apps in Elm and I&amp;rsquo;ve messed around with Haskell, but I&amp;rsquo;ve never used a Lisp for anything complex.&lt;/p>
+&lt;h1 id="part-1" >Part 1
 &lt;span>
 &lt;a href="#part-1">
 &lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
 &lt;/a>
 &lt;/span>
-&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">require&lt;/span> racket/set)
+&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Sum integers from stdin until a blank line (or EOF) is encountered&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum-input-integers-until-break line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(non-empty-string? line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (string-&amp;gt;number line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (sum-input-integers-until-break (read-line)))]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>]))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; IO&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-input-lines)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Get a list of calories from stdin, stopping when EOF is encountered&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-calorie-list)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (string? line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons line (get-input-lines))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>())))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(eof-object? line) &lt;span style="color:#f92672">&amp;#39;&lt;/span>()]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> (cons (sum-input-integers-until-break line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (get-calorie-list))])))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; DUPLICATE FINDING&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (split-string-in-half s)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([half-index (/ (string-length s) &lt;span style="color:#ae81ff">2&lt;/span>)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (list
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (substring s &lt;span style="color:#ae81ff">0&lt;/span> half-index)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (substring s half-index))))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (chars-in-both-strings a b)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (set-intersect
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (string-&amp;gt;list a)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (string-&amp;gt;list b)))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (find-duplicate-in-rucksack s)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (apply chars-in-both-strings (split-string-in-half s)))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; PRIORITY&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (item-priority c)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([i (char-&amp;gt;integer c)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (&amp;lt; i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\A&lt;/span>)) &lt;span style="color:#ae81ff">27&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>)) &lt;span style="color:#ae81ff">1&lt;/span>))))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (rucksack-priority s)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (item-priority (car (find-duplicate-in-rucksack s))))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; MAIN&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(apply + (map rucksack-priority (get-input-lines)))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >Part 2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Get the maximum calories&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(apply max (get-calorie-list))&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="part-2" >Part 2
 &lt;span>
 &lt;a href="#part-2">
 &lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
 &lt;/a>
 &lt;/span>
-&lt;/h1>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">require&lt;/span> racket/set)
+&lt;/h1>&lt;p>Part 2 is almost identical.
+The only difference is that we sum the top three calorie counts instead of just taking the maximum.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-racket" data-lang="racket">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Sum integers from stdin until a blank line (or EOF) is encountered&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum-input-integers-until-break line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(non-empty-string? line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (string-&amp;gt;number line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (sum-input-integers-until-break (read-line)))]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>]))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; IO&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-input-lines)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Get a list of calories from stdin, stopping when EOF is encountered&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (get-calorie-list)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([line (read-line)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (string? line)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons line (get-input-lines))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>())))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">cond&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [(eof-object? line) &lt;span style="color:#f92672">&amp;#39;&lt;/span>()]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#66d9ef">else&lt;/span> (cons (sum-input-integers-until-break line)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (get-calorie-list))])))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Sum a list of numbers&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (sum nums) (apply + nums))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; GROUPING&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (into-groups elves)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (not (empty? elves))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (cons (take elves &lt;span style="color:#ae81ff">3&lt;/span>) (into-groups (drop elves &lt;span style="color:#ae81ff">3&lt;/span>)))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#39;&lt;/span>()))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Get the top N largest numbers&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (largest-nums nums n) (take (sort nums &amp;gt;) n))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (duplicate-char-in-strings strs)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (car (apply set-intersect (map string-&amp;gt;list strs))))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; PRIORITY&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (item-priority c)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">let&lt;/span> ([i (char-&amp;gt;integer c)])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#66d9ef">if&lt;/span> (&amp;lt; i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\A&lt;/span>)) &lt;span style="color:#ae81ff">27&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (+ (- i (char-&amp;gt;integer &lt;span style="color:#e6db74">#\a&lt;/span>)) &lt;span style="color:#ae81ff">1&lt;/span>))))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#66d9ef">define&lt;/span> (group-priority g)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (item-priority (duplicate-char-in-strings g)))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">;; MAIN&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(apply + (map group-priority (into-groups (get-input-lines))))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">; Sum the top three largest calorie counts&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(sum (largest-nums (get-calorie-list) &lt;span style="color:#ae81ff">3&lt;/span>))&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>About</title><link>https://eliaswatson.dev/about/</link><pubDate>Sat, 20 Aug 2022 15:07:36 -0400</pubDate><guid>https://eliaswatson.dev/about/</guid><description>&lt;p>Hey!
+My name is Elias Watson.
+I&amp;rsquo;m a guy in my 20&amp;rsquo;s currently living in Greenville, SC, USA.
+I have a bachelor&amp;rsquo;s degree in computer science from Bob Jones University.
+I&amp;rsquo;m a programmer, technology/science enthusiast, and a follower of Jesus.&lt;/p>
+&lt;p>I am interested in almost every topic, including topics outside of technology and science, but my main computer science interests are in game development and computer graphics.
+I program primarily in Rust outside of my job, but I have experience in many languages.&lt;/p>
+&lt;p>&lt;em>Any opinions I express are solely my own and are not representative of my past, present, or future employers.&lt;/em>&lt;/p></description></item></channel></rss>
