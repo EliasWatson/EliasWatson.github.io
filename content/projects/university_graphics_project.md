@@ -2,6 +2,7 @@
 title: "University Graphics Project"
 date: 2021-05-01T19:00:00-05:00
 summary: "3D renderer written in C++ & OpenGL"
+tags: ["c++", "opengl", "computer_graphics"]
 draft: false
 ---
 
