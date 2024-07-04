@@ -16,4 +16,5 @@ However, this project taught me a lot about the OpenGL pipeline and gave me a mo
 I also learned how to use CMake to build C++ projects across multiple platforms.&lt;/p>
 &lt;hr>
 &lt;p>&lt;img src="https://eliaswatson.dev/university_graphics_project/dragon_scene.jpg" alt="Dragon Scene Screenshot">&lt;/p>
-&lt;p>&lt;img src="https://eliaswatson.dev/university_graphics_project/cash_register.jpg" alt="Cash Register Scene Screenshot">&lt;/p></description></item></channel></rss>
+&lt;p>&lt;img src="https://eliaswatson.dev/university_graphics_project/cash_register.jpg" alt="Cash Register Scene Screenshot">&lt;/p></description></item><item><title>Terrain Raymarcher</title><link>/projects/terrain_raymarcher/</link><pubDate>Sat, 12 Jan 2019 12:00:00 -0500</pubDate><guid>/projects/terrain_raymarcher/</guid><description>&lt;p>&lt;em>The shader can be paused by clicking the button in the bottom left of the viewport&lt;/em>&lt;/p>
+&lt;iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/tsl3zl?gui=true&amp;t=10&amp;paused=false&amp;muted=false" allowfullscreen>&lt;/iframe></description></item></channel></rss>
