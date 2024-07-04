@@ -24,10 +24,6 @@ id = "github"
 url = "https://github.com/EliasWatson"
 
 [[params.social]]
-id = "mastodon"
-url = "https://hachyderm.io/@eliasw"
-
-[[params.social]]
 id = "linkedin"
 url = "https://www.linkedin.com/in/elias-watson"
 
