@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Projects on Elias Watson</title><link>/projects/</link><description>Elias Watson (Projects)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 01 May 2021 19:00:00 -0500</lastBuildDate><atom:link href="/projects/index.xml" rel="self" type="application/rss+xml"/><item><title>University Graphics Project</title><link>/projects/university_graphics_project/</link><pubDate>Sat, 01 May 2021 19:00:00 -0500</pubDate><guid>/projects/university_graphics_project/</guid><description>&lt;p>&lt;a href="https://github.com/EliasWatson/Graphics-Project">&lt;em>View this project on GitHub&lt;/em>&lt;/a>&lt;/p>
+&lt;p>For my computer science independent study at Bob Jones University, I wrote a realistic realtime 3D renderer in C++ and OpenGL.
+I spent 148 hours on this project over the course of four months.&lt;/p>
+&lt;p>The program supports loading 3D scenes from GLTF files.
+It can render shadows and skybox-based reflections.
+The surface shader supports basic PBR materials with albedo, metallic, roughness, and normal maps.
+The user can navigate the scene in a free-cam with the WASD keys and the mouse.
+The scene can be inspected and edited through the included GUI.&lt;/p>
+&lt;p>Prior to this project, I had experience with writing OpenGL shaders on ShaderToy.
+However, this project taught me a lot about the OpenGL pipeline and gave me a more complete picture of how 3D graphics are rendered to the screen.
+I also learned how to use CMake to build C++ projects across multiple platforms.&lt;/p>
+&lt;hr>
+&lt;p>&lt;img src="https://eliaswatson.dev/university_graphics_project/dragon_scene.jpg" alt="Dragon Scene Screenshot">&lt;/p>
+&lt;p>&lt;img src="https://eliaswatson.dev/university_graphics_project/cash_register.jpg" alt="Cash Register Scene Screenshot">&lt;/p></description></item></channel></rss>
