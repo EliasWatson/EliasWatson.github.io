@@ -1,7 +1,7 @@
 baseURL = "https://eliaswatson.dev"
 languageCode = "en-us"
 title = "Elias Watson"
-theme = "anubis"
+theme = "anubis2"
 
 [author]
 name = "Elias Watson"
@@ -52,3 +52,6 @@ tag = "tags"
 
 [markup.goldmark.renderer]
 unsafe = true
+
+[markup.highlight]
+style = 'base16-snazzy' # Highlight.js style
