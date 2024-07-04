@@ -6,11 +6,7 @@ tags: ["shadertoy", "shader", "computer_graphics"]
 draft: false
 ---
 
-<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/NdG3zt?gui=true&t=10&paused=true&muted=false" allowfullscreen></iframe>
-
-_Hover over the image above and click the play button in the bottom left_
-
----
+<iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/NdG3zt?gui=true&t=10&paused=false&muted=false" allowfullscreen></iframe>
 
 After watching Freya Holmér's video on Bézier curves _(linked below)_, I was inspired to create a GPU shader based on her visualizations.
 The four control points (unmoving white circles) can be dragged to change the curve.
