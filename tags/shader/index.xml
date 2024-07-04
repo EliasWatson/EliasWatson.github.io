@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Shader on Elias Watson</title><link>/tags/shader/</link><description>Elias Watson (Shader)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 18 Sep 2021 12:00:00 -0500</lastBuildDate><atom:link href="/tags/shader/index.xml" rel="self" type="application/rss+xml"/><item><title>Bézier Curve Visualization</title><link>/projects/bezier_curve_visualization/</link><pubDate>Sat, 18 Sep 2021 12:00:00 -0500</pubDate><guid>/projects/bezier_curve_visualization/</guid><description>&lt;iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/NdG3zt?gui=true&amp;t=10&amp;paused=true&amp;muted=false" allowfullscreen>&lt;/iframe>
+&lt;p>&lt;em>Hover over the image above and click the play button in the bottom left&lt;/em>&lt;/p>
+&lt;hr>
+&lt;p>After watching Freya Holmér&amp;rsquo;s video on Bézier curves &lt;em>(linked below)&lt;/em>, I was inspired to create a GPU shader based on her visualizations.
+The four control points (unmoving white circles) can be dragged to change the curve.
+The lines are rendered using 2D distance fields.&lt;/p>
+&lt;hr>
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/aVwxzDHniEw?si=lKBcgp903fc02blu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>&lt;/iframe></description></item></channel></rss>
