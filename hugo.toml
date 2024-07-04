@@ -16,9 +16,6 @@ readNextPosts = 3
 copyCodeButton = true
 rssAsSocialIcon = true
 
-utterancesRepo = "EliasWatson/EliasWatson.github.io"
-utterancesLabel = "utterances"
-
 [[params.social]]
 id = "github"
 url = "https://github.com/EliasWatson"
