@@ -8,6 +8,7 @@
   min-width: 40ch;
   min-height: 25ch;
   padding: 2px 0;
+  overflow: hidden;
 
   line-height: 1;
   letter-spacing: 0;
