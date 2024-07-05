@@ -11,6 +11,7 @@ author = "Elias Watson"
 description = "Ramblings of Elias Watson"
 dateFormat = "2006-01-02"
 mainSections = ["posts", "projects"]
+customCSS = ["c64.css"]
 style = "auto"
 readMore = false
 readNextPosts = 3
