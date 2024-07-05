@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Basic on Elias Watson</title><link>/tags/basic/</link><description>Elias Watson (Basic)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 26 Jun 2024 20:00:00 -0500</lastBuildDate><atom:link href="/tags/basic/index.xml" rel="self" type="application/rss+xml"/><item><title>Commodore 64 Memory Viewer</title><link>/posts/c64_memory_viewer/</link><pubDate>Wed, 26 Jun 2024 20:00:00 -0500</pubDate><guid>/posts/c64_memory_viewer/</guid><description>&lt;pre class="c64">
+5 PRINT "";
+10 IA=2048
+20 FOR I=0 TO 15
+30 PRINT "";
+40 N=INT(IA/256)
+50 GOSUB 1000
+60 N=IA AND 255
+70 GOSUB 1000
+80 PRINT "";
+90 FOR J=0 TO 7
+100 PRINT "";
+110 IF (J AND 1)=0 THEN PRINT "";
+120 N=PEEK(IA+J)
+130 GOSUB 1000
+140 NEXT J
+150 PRINT " ";
+160 FOR J=0 TO 7
+170 N=PEEK(IA+J)
+175 K=1024+(I*40)+22+J
+180 IF N&lt;32 THEN POKE K,32
+190 IF N>=32 AND N&lt;128 THEN POKE K,N
+200 IF N>=128 AND N&lt;160 THEN POKE K,32
+210 IF N>=160 THEN POKE K,N
+220 NEXT J
+350 PRINT
+360 IA=IA+8
+370 NEXT I
+990 END
+1000 FOR NI=1 TO 2
+1010 LN=INT(N/16)
+1020 IF LN&lt;10 THEN PRINTCHR$(48+LN);
+1030 IF LN>=10 THEN PRINTCHR$(65+(LN-10));
+1040 N=(N AND 15)*16
+1050 NEXT NI
+1060 RETURN
+&lt;/pre>
+&lt;p>&lt;img src="https://eliaswatson.dev/c64_memory_viewer/output.jpeg" alt="">&lt;/p>
+&lt;hr>
+&lt;p>&lt;em>Commodore 64 font from &lt;a href="https://style64.org/c64-truetype">Style&lt;/a>&lt;/em>&lt;/p></description></item></channel></rss>
