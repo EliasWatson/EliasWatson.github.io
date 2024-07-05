@@ -5,7 +5,7 @@
 }
 
 .c64 {
-  width: 40ch;
+  min-width: 40ch;
   min-height: 25ch;
   padding: 2px 0;
 
