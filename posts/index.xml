@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Elias Watson</title><link>/posts/</link><description>Elias Watson (Posts)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 26 Jun 2024 20:00:00 -0500</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Commodore 64 Memory Viewer</title><link>/posts/c64_memory_viewer/</link><pubDate>Wed, 26 Jun 2024 20:00:00 -0500</pubDate><guid>/posts/c64_memory_viewer/</guid><description>&lt;pre class="c64">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Elias Watson</title><link>/posts/</link><description>Elias Watson (Posts)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>me@eliaswatson.dev
+(Elias Watson)</managingEditor><lastBuildDate>Wed, 26 Jun 2024 20:00:00 -0500</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Commodore 64 Memory Viewer</title><link>/posts/c64_memory_viewer/</link><pubDate>Wed, 26 Jun 2024 20:00:00 -0500</pubDate><author>me@eliaswatson.dev (Elias Watson)</author><guid>/posts/c64_memory_viewer/</guid><description>&lt;pre class="c64">
 5 PRINT "";
 10 IA=2048
 20 FOR I=0 TO 15
@@ -37,7 +38,7 @@
 &lt;/pre>
 &lt;p>&lt;img src="https://eliaswatson.dev/c64_memory_viewer/output.jpeg" alt="">&lt;/p>
 &lt;hr>
-&lt;p>&lt;em>Commodore 64 font from &lt;a href="https://style64.org/c64-truetype">Style&lt;/a>&lt;/em>&lt;/p></description></item><item><title>Advent of Code 2022</title><link>/posts/aoc_2022/</link><pubDate>Sat, 03 Dec 2022 13:00:00 -0500</pubDate><guid>/posts/aoc_2022/</guid><description>&lt;p>This year I decided to solve &lt;a href="https://adventofcode.com/2022">Advent of Code&lt;/a> in &lt;a href="https://racket-lang.org">Racket&lt;/a>.
+&lt;p>&lt;em>Commodore 64 font from &lt;a href="https://style64.org/c64-truetype">Style&lt;/a>&lt;/em>&lt;/p></description></item><item><title>Advent of Code 2022</title><link>/posts/aoc_2022/</link><pubDate>Sat, 03 Dec 2022 13:00:00 -0500</pubDate><author>me@eliaswatson.dev (Elias Watson)</author><guid>/posts/aoc_2022/</guid><description>&lt;p>This year I decided to solve &lt;a href="https://adventofcode.com/2022">Advent of Code&lt;/a> in &lt;a href="https://racket-lang.org">Racket&lt;/a>.
 I&amp;rsquo;ve seen lots of people gush over how much they love Lisp, so I want to see what it&amp;rsquo;s all about.
 The functional paradigm isn&amp;rsquo;t completely foreign to me as I&amp;rsquo;ve written a few web apps in Elm and I&amp;rsquo;ve messed around with Haskell, but I&amp;rsquo;ve never used a Lisp for anything complex.&lt;/p>
 &lt;h1 id="day-1---calorie-counting" >
