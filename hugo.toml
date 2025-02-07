@@ -1,13 +1,18 @@
 baseURL = "https://eliaswatson.dev"
 languageCode = "en-us"
+defaultContentLanguage = "en"
 title = "Elias Watson"
 theme = "anubis2"
 
-[author]
+[pagination]
+pagerSize = 5
+
+[params.author]
 name = "Elias Watson"
+email = "me@eliaswatson.dev"
+location = "United States of America"
 
 [params]
-author = "Elias Watson"
 description = "Ramblings of Elias Watson"
 dateFormat = "2006-01-02"
 mainSections = ["posts", "projects"]
